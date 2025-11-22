@@ -1,0 +1,88 @@
+a {
+    color: #8ff;
+}
+
+#menu {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.element {
+    width: 120px;
+    height: 160px;
+    box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.5);
+    border: 1px solid rgba(127, 255, 255, 0.25);
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    line-height: normal;
+    cursor: default;
+}
+
+.element:hover {
+    box-shadow: 0px 0px 12px rgba(0, 255, 255, 0.75);
+    border: 1px solid rgba(127, 255, 255, 0.75);
+}
+
+.element .number {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-size: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.element .number2 {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    font-size: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.element .symbol {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90px;
+    height: 90px;
+    object-fit: cover;
+}
+
+.element .details {
+    position: absolute;
+    bottom: 20px;
+    left: 0px;
+    right: 0px;
+    font-size: 10px;
+    color: rgb(255, 255, 255);
+}
+
+.element .details2 {
+    position: absolute;
+    bottom: 8px;
+    left: 0px;
+    right: 0px;
+    font-size: 10px;
+    color: rgb(226, 226, 226);
+}
+
+button {
+    color: rgba(127, 255, 255, 0.75);
+    background: transparent;
+    outline: 1px solid rgba(127, 255, 255, 0.75);
+    border: 0px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(0, 255, 255, 0.5);
+}
+
+button:active {
+    color: #000000;
+    background-color: rgba(0, 255, 255, 0.75);
+}
