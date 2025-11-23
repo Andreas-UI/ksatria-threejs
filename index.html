@@ -130,9 +130,6 @@
         google.accounts.id.initialize({
           client_id: GOOGLE_CLIENT_ID,
           callback: handleCredentialResponse,
-          auto_select: false,
-          cancel_on_tap_outside: false,
-          use_fedcm_for_prompt: false,
         });
 
         // Render Google official button immediately
@@ -144,12 +141,9 @@
             size: "large",
             shape: "rectangular",
             logo_alignment: "left",
-            text: "Sign in with Google",
+            text: "signin_with",
           }
         );
-
-        // Show the inline account chooser UI
-        // google.accounts.id.prompt();
       };
     </script>
   </body>
