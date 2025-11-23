@@ -138,8 +138,10 @@ export async function initApp() {
 
     for (let i = 0, l = objects.length; i < l; i++) {
       const theta = i * 0.175 + Math.PI;
-      const y = -(i * 8) + 450;
+      const theta2 = -i * 0.175 + Math.PI;
+      const y = -(i * 16) + 450;
 
+      // Helix 1
       const object = new THREE.Object3D();
 
       object.position.setFromCylindricalCoords(900, theta, y);
@@ -151,6 +153,19 @@ export async function initApp() {
       object.lookAt(vector);
 
       targets.helix.push(object);
+
+      // Helix 2
+      const object2 = new THREE.Object3D();
+
+      object2.position.setFromCylindricalCoords(900, theta2, y);
+
+      vector.x = object2.position.x * 2;
+      vector.y = object2.position.y;
+      vector.z = object2.position.z * 2;
+
+      object2.lookAt(vector);
+
+      targets.helix.push(object2);
     }
 
     // grid
