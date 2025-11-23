@@ -22,15 +22,14 @@ export async function initApp() {
     const interest = r[4];
     const networth = r[5];
 
-    // 🔥 Push EXACTLY 5 values to preserve your existing logic
-    table.push(photo); // symbol → photo
-    table.push(name); // element name
-    table.push(interest); // number → interest
+    table.push(name);
+    table.push(photo);
     table.push(age);
     table.push(country);
+    table.push(interest);
     table.push(networth);
-    table.push((index % 20) + 1); // col (auto)
-    table.push(Math.floor(index / 20) + 1); // row (auto)
+    table.push((index % 20) + 1); // columns: 20
+    table.push(Math.floor(index / 20) + 1); // rows: 10
   });
 
   let camera, scene, renderer;
@@ -56,49 +55,48 @@ export async function initApp() {
     // table
 
     for (let i = 0; i < table.length; i += 8) {
+      let name = table[i + 0];
+      let photo = table[i + 1];
+      let age = table[i + 2];
+      let country = table[i + 3];
+      let interest = table[i + 4];
+      let networth = Number(table[i + 5]);
+
       const element = document.createElement("div");
       element.className = "element";
-      element.style.backgroundColor =
-        // "rgba(0,127,127," + (Math.random() * 0.5 + 0.25) + ")";
-        "rgba(0,127,127," + (0 * 0.5 + 0.25) + ")";
 
-      let networth = Number(table[i + 5]);
       const minNetWorth = 0;
       const maxNetWorth = 400000;
       let t = (networth - minNetWorth) / (maxNetWorth - minNetWorth);
       t = Math.max(0, Math.min(1, t));
       let hue = t * 120; // 0 to 120 , red to green
       element.style.border = `3px solid hsl(${hue}, 100%, 50%)`;
+      element.style.backgroundColor = `hsla(${hue}, 100%, 50%, 0.2)`;
 
-      const number = document.createElement("div");
-      number.className = "number";
-      number.textContent = table[i + 3];
-      element.appendChild(number);
+      const countryElement = document.createElement("div");
+      countryElement.className = "country";
+      countryElement.textContent = country;
+      element.appendChild(countryElement);
 
-      const number2 = document.createElement("div");
-      number2.className = "number2";
-      number2.textContent = table[i + 4];
-      element.appendChild(number2);
+      const interestElement = document.createElement("div");
+      interestElement.className = "interest";
+      interestElement.textContent = interest;
+      element.appendChild(interestElement);
 
-      // const symbol = document.createElement("div");
-      // symbol.className = "symbol";
-      // symbol.textContent = table[i];
-      // element.appendChild(symbol);
+      const imgElement = document.createElement("img");
+      imgElement.className = "symbol";
+      imgElement.src = photo;
+      element.appendChild(imgElement);
 
-      const img = document.createElement("img");
-      img.className = "symbol";
-      img.src = table[i];
-      element.appendChild(img);
+      const nameElement = document.createElement("div");
+      nameElement.className = "name";
+      nameElement.innerHTML = name;
+      element.appendChild(nameElement);
 
-      const details = document.createElement("div");
-      details.className = "details";
-      details.innerHTML = table[i + 1];
-      element.appendChild(details);
-
-      const details2 = document.createElement("div");
-      details2.className = "details2";
-      details2.innerHTML = table[i + 2];
-      element.appendChild(details2);
+      const ageElement = document.createElement("div");
+      ageElement.className = "age";
+      ageElement.innerHTML = age;
+      element.appendChild(ageElement);
 
       const objectCSS = new CSS3DObject(element);
       objectCSS.position.x = Math.random() * 4000 - 2000;
@@ -160,9 +158,9 @@ export async function initApp() {
     for (let i = 0; i < objects.length; i++) {
       const object = new THREE.Object3D();
 
-      object.position.x = (i % 5) * 400 - 800;
-      object.position.y = -(Math.floor(i / 5) % 4) * 400 + 800;
-      object.position.z = Math.floor(i / (5 * 4)) * 1000 - 2000;
+      object.position.x = (i % 5) * 400 - 800; // x: 5 items
+      object.position.y = -(Math.floor(i / 5) % 4) * 400 + 800; // y: 4 rows, moves down every 5 items
+      object.position.z = Math.floor(i / (5 * 4)) * 1000 - 2000; // z: after 20, start new layer
 
       targets.grid.push(object);
     }
