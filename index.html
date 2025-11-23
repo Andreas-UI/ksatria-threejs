@@ -137,6 +137,9 @@
         });
 
         // Render Google official button immediately
+        // Apparently large size allow personalization but not medium or small
+        // https://developers.google.com/identity/gsi/web/guides/personalized-button#:~:text=One%20session:%20There's%20only%20one,be%20displayed%20inside%20the%20button.
+        const container = document.getElementById("google-signin-container");
         google.accounts.id.renderButton(
           document.getElementById("google-signin-container"),
           {
@@ -146,6 +149,7 @@
             shape: "rectangular",
             logo_alignment: "left",
             text: "signin_with",
+            width: container.width
           }
         );
       };
