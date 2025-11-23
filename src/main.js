@@ -139,7 +139,7 @@ export async function initApp() {
     for (let i = 0, l = objects.length; i < l; i++) {
       const theta = i * 0.175 + Math.PI;
       const theta2 = -i * 0.175 + Math.PI;
-      const y = -(i * 16) + 450;
+      const y = -(i * 24) + 450;
 
       // Helix 1
       const object = new THREE.Object3D();
