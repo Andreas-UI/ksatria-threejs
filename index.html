@@ -7,20 +7,33 @@
       name="viewport"
       content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
     />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link type="text/css" rel="stylesheet" href="/src/main.css" />
     <link type="text/css" rel="stylesheet" href="/src/ptable.css" />
+    <link type="text/css" rel="stylesheet" href="/src/auth.css" />
   </head>
   <body>
-    <div id="info">
-      <a href="https://threejs.org" target="_blank" rel="noopener">three.js</a>
-      css3d - periodic table.
+    <div id="auth-container">
+      <div class="auth-card">
+        <h1>Welcome Back</h1>
+        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit</p>
+        <div id="google-signin-container"></div>
+      </div>
     </div>
-    <div id="container"></div>
-    <div id="menu">
-      <button id="table">TABLE</button>
-      <button id="sphere">SPHERE</button>
-      <button id="helix">HELIX</button>
-      <button id="grid">GRID</button>
+    <div id="app-container">
+      <div id="info">
+        <a href="https://threejs.org" target="_blank" rel="noopener"
+          >three.js</a
+        >
+        css3d - periodic table.
+      </div>
+      <div id="container"></div>
+      <div id="menu">
+        <button id="table">TABLE</button>
+        <button id="sphere">SPHERE</button>
+        <button id="helix">HELIX</button>
+        <button id="grid">GRID</button>
+      </div>
     </div>
 
     <script type="importmap">
@@ -33,5 +46,66 @@
     </script>
 
     <script type="module" src="/src/main.js"></script>
+    <script type="module">
+      import { initApp } from "/src/main.js";
+
+      const GOOGLE_CLIENT_ID = import.meta.env.VITE_CLIENT_ID;
+
+      // Initialize Google Sign-In
+      window.onload = function () {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleCredentialResponse,
+          auto_select: false,
+          cancel_on_tap_outside: false,
+          use_fedcm_for_prompt: true,
+          use_fedcm_for_prompt: true,
+        });
+
+        // Render Google official button immediately
+        google.accounts.id.renderButton(
+          document.getElementById("google-signin-container"),
+          {
+            type: "standard",
+            theme: "filled_blue",
+            size: "large",
+            shape: "rectangular",
+            logo_alignment: "left",
+            text: "Sign in with Google",
+          }
+        );
+
+        // Show the inline account chooser UI
+        google.accounts.id.prompt();
+      };
+
+      // Handle Google Sign-In Response
+      function handleCredentialResponse(response) {
+        const credential = response.credential;
+        const payload = parseJwt(credential);
+
+        // console.log("User:", payload.name, payload.email);
+
+        // Hide auth screen and show app
+        document.getElementById("auth-container").classList.add("hidden");
+        document.getElementById("app-container").classList.add("visible");
+        initApp();
+      }
+
+      // Parse JWT token
+      function parseJwt(token) {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map((c) => {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
+        return JSON.parse(jsonPayload);
+      }
+    </script>
   </body>
 </html>
