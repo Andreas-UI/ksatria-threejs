@@ -132,7 +132,7 @@
           callback: handleCredentialResponse,
           auto_select: false,
           cancel_on_tap_outside: false,
-          use_fedcm_for_prompt: true,
+          use_fedcm_for_prompt: false,
         });
 
         // Render Google official button immediately
@@ -149,7 +149,7 @@
         );
 
         // Show the inline account chooser UI
-        google.accounts.id.prompt();
+        // google.accounts.id.prompt();
       };
     </script>
   </body>
